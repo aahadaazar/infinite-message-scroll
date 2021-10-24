@@ -5,6 +5,7 @@ import Loading from '../Loading/Loading';
 import axios from 'axios';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import MessageBox from '../MessageBox/MessageBox';
+import { calculateInViewMessage } from '../../utils/utils';
 
 function MessageApp() {
   const [messages, setMessages] = useState([]);
@@ -13,6 +14,13 @@ function MessageApp() {
   const [hideLoading, setHideLoading] = useState(false);
   const messageContainerRef = useRef(null);
 
+  useEffect(() => {
+    if (messages.length > 0) {
+      const length = messageContainerRef.current.children.length;
+      setElementRef(messageContainerRef.current.children[calculateInViewMessage(length)]);
+    }
+    // eslint-disable-next-line
+  }, [messages]);
 
   useEffect(() => {
     getMessages();
@@ -20,23 +28,22 @@ function MessageApp() {
   }, []);
 
   const getMessages = () => {
+    console.log('getting messages');
+    setIsFetching(true);
     axios.get(`http://message-list.appspot.com/messages?limit=${count}${pageToken ? `&pageToken?${pageToken}` : ''}`).then(res => {
-      const { messages: newMessages, pageToken } = res.data;
-      console.log(messages);
-      setTimeout(() => {
-        setMessages([...messages, ...newMessages]);
-        if (!hideLoading) {
-          setTimeout(() => {
-            setHideLoading(true);
-          }, 1000);
-        }
-      }, 1000);
-      setPageToken(pageToken);
       setIsFetching(false);
+      const { messages: newMessages, pageToken } = res.data;
+      setMessages([...messages, ...newMessages]);
+      if (!hideLoading) {
+        setTimeout(() => {
+          setHideLoading(true);
+        }, 1000);
+      }
+      setPageToken(pageToken);
     });
   }
 
-  const [isFetching, setIsFetching] = useInfiniteScroll(getMessages, messageContainerRef.current);
+  const [isFetching, setIsFetching, setElementRef] = useInfiniteScroll(getMessages);
 
   return (
     <div className={styles.appContainer}>

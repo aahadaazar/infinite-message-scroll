@@ -1,37 +1,42 @@
-import _ from 'lodash';
 import { useState, useEffect } from 'react';
 
-const useInfiniteScroll = (callback = () => {
-  console.log('fetching');
-}, ref) => {
+const useInfiniteScroll = (callback) => {
   const [isFetching, setIsFetching] = useState(false);
+  const [elementRef, setElementRef] = useState();
 
-  useEffect(() => {
-    console.log(ref);
-    if (ref) {
-      ref.addEventListener('scroll', scrollEventListener);
-    }
-    return () => ref && ref.removeEventListener('scroll', scrollEventListener);
-    // eslint-disable-next-line
-  }, [ref]);
-
-  useEffect(() => {
-    if (!isFetching) return;
-    callback(() => {
-      console.log('called back');
+  const observerCallback = (entries, observer) => {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) {
+        return;
+      }
+      if (entry.isIntersecting && !isFetching) {
+        callback();
+        observer.unobserve(entry.target);
+      } else if (isFetching) {
+        console.log('not fetching');
+      }
     });
-    // eslint-disable-next-line
-  }, [isFetching]);
+  }
 
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5,
+  }
+  const observer = new IntersectionObserver(observerCallback, options);
 
-  const scrollEventListener = _.throttle(() => {
-    if (ref.offsetHeight + ref.scrollTop === ref.scrollHeight && !isFetching) {
-      setIsFetching(true);
-      console.log('Fetch more list items!');
+  useEffect(() => {
+    if (elementRef) {
+      observer.disconnect();
+      observer.observe(elementRef);
     }
-  })
+    return () => {
+      observer.disconnect();
+    }
+    // eslint-disable-next-line
+  }, [elementRef])
 
-  return [isFetching, setIsFetching];
+  return [isFetching, setIsFetching, setElementRef];
 };
 
 export default useInfiniteScroll;

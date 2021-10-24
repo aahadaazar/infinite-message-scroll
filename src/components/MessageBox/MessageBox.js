@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import styles from './MessageBox.module.css';
 
-function MessageBox({message}) {
+function MessageBox({ message}) {
   const { content, author, updated } = message;
   return (
     <div className={styles.messageBox}>
