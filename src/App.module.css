@@ -1,0 +1,22 @@
+.App {
+  background: black;
+  height: calc(100vh - 20px);
+  padding: 10px;  
+  background: linear-gradient(-45deg, #000000, #afadad, #6a6a6a, #3c3c3c);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+
+}
+
+/* KeyFrames */
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}

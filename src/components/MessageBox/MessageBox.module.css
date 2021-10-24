@@ -1,0 +1,33 @@
+.messageBox{
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 5px 6px -3px #6237b099;
+  background: #f8f8f8;
+}
+.authorDetails > p{
+  margin:0;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.avatarImg{
+  width: 40px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.messageDetailContainer{
+  display: flex;
+  align-items: flex-start;
+}
+
+.messageText{
+  margin-top: 10px;
+}
+
+.messageText > p{
+  margin:0;
+  font-size: 14px;
+}

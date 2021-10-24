@@ -1,0 +1,60 @@
+.appContainer{
+  flex: 1;
+  position: relative;
+  padding-top: 40px;
+  background: #efecec;
+}
+
+.appStickyHeader{
+  position: absolute;
+  font-size: 14px;
+  width: -webkit-fill-available;
+  background: #673BB7;
+  color: white;
+  padding: 10px;
+  box-shadow: 0 3px 5px rgb(57 63 72 / 30%);
+  display: flex;
+    align-items: center;
+    top: 0px;
+}
+
+#messageIcon{
+  width: 16px;
+    margin-bottom: -2px;
+    margin-right: 10px;
+    -webkit-filter: invert(100%); /* Safari/Chrome */
+    filter: invert(100%);
+}
+
+.loadingContainer{
+  position: absolute;
+    background: white;
+    top: 37px;
+    width: 100%;
+    height: calc(100% - 37px);
+    display: flex;
+    justify-content: center;
+}
+
+.fadeOut{
+  animation: fade 0.8s;
+  animation-fill-mode: forwards;
+}
+
+.hidden{
+  display: none;
+}
+
+.messagesContainer{
+  padding: 0px 10px;
+  height: 365px;  
+  padding-top: 10px;
+  overflow-y: auto;
+}
+
+@keyframes fade {
+  0% {opacity: 1;}
+  50% {opacity: 0.5;}
+  /* 75% {opacity: 0;} */
+  100% {opacity: 0;}
+}
