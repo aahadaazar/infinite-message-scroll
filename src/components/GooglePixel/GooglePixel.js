@@ -16,6 +16,7 @@ function GooglePixel({children}) {
           <span className={styles.headerItem}>{'No Network'}</span>
           <span className={styles.headerItem}>{time}</span>
         </div>
+        {/* In this case, Children = Messaging App Layout */}
         {children}
       </div>
     </div>

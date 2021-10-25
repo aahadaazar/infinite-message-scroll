@@ -6,8 +6,11 @@ import MessageApp from "./components/MessageApp/MessageApp";
 function App() {
   return (
     <div className={styles.App}>
+      {/* Main App Header */}
       <TextHeader />
+      {/* Google Pixel Mobile Layout */}
       <GooglePixel>
+        {/* Messaging App View */}
         <MessageApp />
       </GooglePixel>
     </div>
