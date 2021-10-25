@@ -28,11 +28,13 @@ function MessageApp() {
       const length = messageContainerRef.current.children.length;
       setElementRef(messageContainerRef.current.children[calculateInViewMessage(length)]);
     }
+    // eslint-disable-next-line
   }, [messages]);
 
   // on initial load, gets 10 messages
   useEffect(() => {
     getMessages();
+    // eslint-disable-next-line
   }, []);
 
   // general function to get messages, uses axios to fetch data from given api
