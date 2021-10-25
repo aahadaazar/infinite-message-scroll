@@ -44,7 +44,7 @@ function MessageApp() {
     }
     console.log('getting messages');
     setIsFetching(true);
-    axios.get(`http://message-list.appspot.com/messages?limit=${count}${pageToken ? `&pageToken?${pageToken}` : ''}`).then(res => {
+    axios.get(`https://message-list.appspot.com/messages?limit=${count}${pageToken ? `&pageToken?${pageToken}` : ''}`).then(res => {
       setIsFetching(false);
       const { messages: newMessages, pageToken } = res.data;
       setMessages([...messages, ...newMessages]);
