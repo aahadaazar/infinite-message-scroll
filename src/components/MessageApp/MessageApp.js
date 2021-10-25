@@ -6,6 +6,8 @@ import axios from 'axios';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import MessageBox from '../MessageBox/MessageBox';
 import { calculateInViewMessage } from '../../utils/utils';
+import Draggable from 'react-draggable';
+
 
 function MessageApp() {
   const [messages, setMessages] = useState([]);
@@ -13,6 +15,7 @@ function MessageApp() {
   const [count] = useState(10);
   const [hideLoading, setHideLoading] = useState(false);
   const messageContainerRef = useRef(null);
+  // const [messageIndex, setMessageIndex] = useState();
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -28,6 +31,9 @@ function MessageApp() {
   }, []);
 
   const getMessages = () => {
+    if (isFetching) {
+      return;
+    }
     console.log('getting messages');
     setIsFetching(true);
     axios.get(`http://message-list.appspot.com/messages?limit=${count}${pageToken ? `&pageToken?${pageToken}` : ''}`).then(res => {
@@ -45,6 +51,22 @@ function MessageApp() {
 
   const [isFetching, setIsFetching, setElementRef] = useInfiniteScroll(getMessages);
 
+  const onDragStart = event => {
+
+  };
+
+  const onDragStop = event => {
+    // console.log(event.target.closest('.react-draggable-dragged'));
+    console.log()
+    let messageIndex = parseInt(event.path[3].closest('.react-draggable-dragged').getAttribute("message-index"));
+    event.path[3].closest('.react-draggable-dragged').remove()
+    console.log(messageIndex);
+    const tempMessages = [...messages];
+    tempMessages.splice(messageIndex, 1);
+    setMessages(tempMessages);
+    console.log('drag stopped');
+  };
+
   return (
     <div className={styles.appContainer}>
       <div className={styles.appStickyHeader}>
@@ -55,8 +77,16 @@ function MessageApp() {
         <Loading />
       </div>
       <div ref={messageContainerRef} className={styles.messagesContainer}>
-        {React.Children.toArray(messages.map(o => {
-          return <MessageBox message={o} />
+        {React.Children.toArray(messages.map((o, index) => {
+          return <Draggable
+            axis={"x"} bounds={{ top: 0, left: 0, right: 80 }}
+            onStop={onDragStop}
+            onStart={onDragStart}
+          >
+            <div message-index={index}>
+              <MessageBox message={o} />
+            </div>
+          </Draggable>
         }))}
       </div>
     </div >

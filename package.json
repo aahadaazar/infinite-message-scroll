@@ -10,6 +10,7 @@
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-draggable": "^4.4.4",
     "react-scripts": "4.0.3",
     "react-window": "^1.8.6",
     "web-vitals": "^1.0.1"

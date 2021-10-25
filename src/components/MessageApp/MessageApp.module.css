@@ -50,6 +50,7 @@
   height: 365px;  
   padding-top: 10px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 @keyframes fade {
