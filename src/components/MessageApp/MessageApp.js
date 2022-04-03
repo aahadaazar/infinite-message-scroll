@@ -6,7 +6,7 @@ import axios from 'axios';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import MessageBox from '../MessageBox/MessageBox';
 import { calculateInViewMessage } from '../../utils/utils';
-import Draggable from 'react-draggable';
+// import Draggable from 'react-draggable';
 
 
 function MessageApp() {
@@ -61,6 +61,7 @@ function MessageApp() {
   const [isFetching, setIsFetching, setElementRef] = useInfiniteScroll(getMessages);
 
   // on message drag, whenever drag ends, message is deleted
+  // eslint-disable-next-line
   const onDragStop = event => {
     // console.log(event.target.closest('.react-draggable-dragged'));
     console.log()
@@ -87,16 +88,19 @@ function MessageApp() {
       {/* Message List Container */}
       <div ref={messageContainerRef} className={styles.messagesContainer}>
         {/* React.Children.toArray is used to avoid id as keys */}
+        {/* {React.Children.toArray(messages.map((o, index) => { */}
+        {/* return <Draggable */}
+        {/* axis={"x"} bounds={{ top: 0, left: 0, right: 80 }} */}
+        {/* onStop={onDragStop}> */}
+        {/* for draggable reference */}
+        {/* <div message-index={index}> */}
+        {/* message details container */}
+        {/* <MessageBox message={o} /> */}
+        {/* </div> */}
+        {/* </Draggable> */}
+        {/* }))} */}
         {React.Children.toArray(messages.map((o, index) => {
-          return <Draggable
-            axis={"x"} bounds={{ top: 0, left: 0, right: 80 }}
-            onStop={onDragStop}>
-            {/* for draggable reference */}
-            <div message-index={index}>
-              {/* message details container */}
-              <MessageBox message={o} />
-            </div>
-          </Draggable>
+          return <MessageBox message={o} />
         }))}
       </div>
     </div >
